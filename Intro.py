@@ -268,7 +268,7 @@ for artefacto in artefactos:
         artefacto["url"] = "#" # Enlace de seguridad si falta la URL
 
 # Configuración del ciclo de imágenes
-image_cycle = ['pipi.png', 'fifi.png', 'lili.png']
+image_cycle = ['pipi.jpg', 'fifi.jpg', 'lili.png']
 
 # --- RENDERIZADO DE ARTEFACTOS ---
 st.markdown("### Colección de Artefactos de la Vigilia")
