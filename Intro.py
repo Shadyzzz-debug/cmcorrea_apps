@@ -152,7 +152,6 @@ url_map = {
 }
 
 # --- Definición y Mapeo de Artefactos ---
-# Se eliminan los artefactos que no tienen una 'key' en el 'url_map' proporcionado
 artefactos = [
     {
         "nombre": "Análisis de Manuscritos (Procesamiento de Texto)",
@@ -287,11 +286,24 @@ for i, artefacto in enumerate(artefactos):
         # Título de la tarjeta
         st.markdown(f"**<h3 style='margin-top: 0px;'>{artefacto['nombre']}</h3>**", unsafe_allow_html=True)
         
-        # Placeholder de Imagen
-        st.markdown(f"<!-- Imagen Placeholder: {image_file} -->")
-        # Uso un placeholder.co para la imagen, pero con el nombre del archivo para que el usuario sepa cuál es.
-        st.image(f"https://placehold.co/200x150/1A1A2A/C0C0C0?text=Runas+Arcanas+%28{image_file.split('.')[0]}%29", caption=f"Remplazar por: {image_file}", use_column_width=True)
-        
+        # CAMBIO CRÍTICO: Referencia directa al nombre del archivo local.
+        # Streamlit intentará cargar estas imágenes desde el directorio del script.
+        # Si las imágenes no se encuentran localmente, esto fallará.
+        # Se requiere que los archivos pipi.png, fifi.png, y lili.png estén en el mismo
+        # directorio que este script en el repositorio de GitHub.
+        try:
+            # Intenta cargar la imagen para asegurar el tamaño, Streamlit es flexible con esto
+            st.image(image_file, caption=f"Artefacto: {image_file}", use_column_width=True)
+        except Exception:
+            # Fallback si la imagen no se puede cargar (muestra solo el nombre)
+            st.markdown(f"""
+                <div style="height: 150px; background-color: #383850; border: 3px dashed #9C7E4F; 
+                            display: flex; align-items: center; justify-content: center; 
+                            text-align: center; color: #E0E0E0; border-radius: 6px; margin-bottom: 15px;">
+                    {image_file} (PENDIENTE DE CARGA)
+                </div>
+            """, unsafe_allow_html=True)
+            
         # Descripción
         st.write(artefacto['descripcion'])
         
@@ -302,6 +314,7 @@ for i, artefacto in enumerate(artefactos):
 
 st.markdown("---")
 st.markdown("<p style='text-align: center; color: #4F4A5E; font-size: 1.1em;'>La cacería nunca termina. Que tu 'Insight' sea profundo.</p>", unsafe_allow_html=True)
+
 
 
 
