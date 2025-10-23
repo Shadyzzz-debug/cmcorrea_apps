@@ -130,7 +130,7 @@ st.subheader("El Nexo de los Antiguos")
 st.write(f"Conexión a los pergaminos ancestrales y ejercicios rituales: [Runa de Enlace]({url_ia})")
 st.markdown("---")
 
-# Diccionario para mapear URLs y Nombres
+# Diccionario para mapear URLs y Nombres (SOLO SE MANTIENEN LOS PROPORCIONADOS POR EL USUARIO)
 url_map = {
     "analisis de texto": "https://yz3nwbxbpormlet7y3on67.streamlit.app/",
     "chat pdf": "https://chatpdf-baazt5frfiwv54xbs5tabw.streamlit.app/",
@@ -152,6 +152,7 @@ url_map = {
 }
 
 # --- Definición y Mapeo de Artefactos ---
+# Se eliminan los artefactos que no tienen una 'key' en el 'url_map' proporcionado
 artefactos = [
     {
         "nombre": "Análisis de Manuscritos (Procesamiento de Texto)",
@@ -255,40 +256,16 @@ artefactos = [
         "enlace_texto": "YOLO V5 (Lente)",
         "key": "yolov5"
     },
-    # Añadidos de la versión anterior que no estaban en la lista de URLs pero son parte de la narrativa
-    {
-        "nombre": "Invocación de la Voz del Oráculo",
-        "descripcion": "Transformación del texto escrito en un eco auditivo. Esta aplicación conjura una voz audible a partir de las runas.",
-        "enlace_texto": "Texto a Voz",
-        "key": "https://imultimod.streamlit.app/" # URL antigua, se mantiene
-    },
-    {
-        "nombre": "El Susurro de la Memoria (Transcriptor)",
-        "descripcion": "Artefacto diseñado para transcribir los largos cantos y lamentos contenidos en grabaciones de audio o video, preservando cada palabra.",
-        "enlace_texto": "Transcriptor Arcano",
-        "key": "https://transcript-whisper.streamlit.app/" # URL antigua, se mantiene
-    },
-    {
-        "nombre": "Visión de la Cacería (Detección)",
-        "descripcion": "El Ojo de la Cacería, capaz de detectar las siluetas de las bestias ocultas en las imágenes. Un lente YHOLO para la supervivencia.",
-        "enlace_texto": "YOLO: Lente Arcano",
-        "key": "https://xn3pg24ztuv6fdiqon8qn3.streamlit.app/" # URL antigua, se mantiene
-    },
-    {
-        "nombre": "Forja de Modelos Arcanos",
-        "descripcion": "El yunque donde se entrenan las efigies mentales. Permite usar modelos imbuídos con conocimiento (YOLO) para revelar patrones en la locura.",
-        "enlace_texto": "YOLO: Entrenamiento",
-        "key": "https://xn3pg24ztuv6fdiqon8qn3.streamlit.app/" # URL antigua, se mantiene
-    },
 ]
 
 # Rellenar las URLs desde el mapa
 for artefacto in artefactos:
+    # Si la clave existe en url_map, se asigna la URL
     if artefacto["key"] in url_map:
         artefacto["url"] = url_map[artefacto["key"]]
-    elif not artefacto.get("url"):
-        # Para los artefactos que mantienen su URL antigua y no estaban en la lista de URLs del usuario
-        artefacto["url"] = artefacto["key"]
+    else:
+        # Esto no debería ocurrir después del filtrado, pero se mantiene la lógica de seguridad.
+        artefacto["url"] = "#" # Enlace de seguridad si falta la URL
 
 # Configuración del ciclo de imágenes
 image_cycle = ['pipi.png', 'fifi.png', 'lili.png']
